@@ -1,0 +1,17 @@
+{
+  "name": "douban-robot",
+  "version": "1.0.0",
+  "description": "豆瓣相关爬虫",
+  "main": "index.js",
+  "scripts": {
+    "start": "pm2 start server/index.js --watch"
+  },
+  "author": "liugang",
+  "license": "ISC",
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "koa-router": "^7.4.0",
+    "koa2": "^2.0.0-alpha.7",
+    "request": "^2.87.0"
+  }
+}
