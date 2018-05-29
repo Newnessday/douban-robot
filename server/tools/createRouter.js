@@ -5,12 +5,14 @@
  */
 
 let koa2Router = require('koa-router');
+let urlParse = require('./urlParse');
+
 let router = new koa2Router();
 
 const createRouter = async options => {
   return router.get(options.path, async ctx => {
-    let data = await options.dataFun();
-    ctx.body = data;
+    console.log(urlParse(ctx.request.url))
+    ctx.body = await options.dataFun();
   })
 }
 

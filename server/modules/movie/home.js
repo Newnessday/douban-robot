@@ -10,16 +10,6 @@ let promise = require('../../tools/promise');
 let movieInTagList = require('../../tools/movieInTagList');
 let createResponse = require('../../tools/createResponse');
 
-
-const homeData = {
-  hotShow: [],  //正在热映
-  latestHotMovie: [], //最近热门电影
-  latestHotTv: [],  //最近热门电视剧
-  hotRecommond: [], //热门推荐
-  loveFilmReview: [], //最后欢迎的影评
-  goodRanking:  [], //本周口碑榜
-}
-
 // 正在热映
 const hotShow = () => {
   return promise({

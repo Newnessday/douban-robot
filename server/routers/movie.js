@@ -19,7 +19,9 @@ const routerList = [
   },
   {
     path: '/movie/getLatestHotTv',
-    dataFun: movieHome.latestHotTv
+    dataFun(ctx){
+      return movieHome.latestHotTv();
+    }
   },
   {
     path: '/movie/getHotRecommond',
