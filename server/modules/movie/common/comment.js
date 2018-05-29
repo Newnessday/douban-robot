@@ -6,7 +6,6 @@
 
 let promise = require('../../../tools/promise');
 let cheerio = require('cheerio');
-let axios = require('axios');
 
 const comment = async ({
                         id,
@@ -15,50 +14,33 @@ const comment = async ({
                         sort = 'new_score',
                         percent_type = '',  //空：全部，h：好评；m：一般；l：差评
                        }) => {
-  // start=20&limit=20&sort=time&status=P&percent_type=
-  promise({
+  return await promise({
     url: `https://movie.douban.com/subject/${id}/comments`,
+    params: {
+      start,
+      limit,
+      sort,
+      percent_type
+    },
     callback(body, resolve){
       let $ = cheerio.load(body);
+      let commentList = [];
 
+      $('.mod-bd .comment-item').each(function(){
+        let self = $(this);
+        commentList.push({
+          pepole: self.find('.avatar a').attr('title'),
+          pic: self.find('.avatar img').attr('src'),
+          content: self.find('p').text(),
+          rating: ((self.find('.rating').attr('class') || '').match(/\d+/) || [])[0],
+          time: self.find('.comment-time').text(),
+          votes: self.find('.votes').text()
+        })
+      });
+
+      resolve(commentList);
     }
-  })
+  });
 }
 
-
-function test(){
-  let p = {
-    start: 20,
-    limit: 20,
-    sort: 'new_score',
-    status: 'P',
-    percent_type: ''
-  }
-  // request({
-  //   url: 'https://movie.douban.com/j/search_subjects?type=tv&tag=%E5%9B%BD%E4%BA%A7%E5%89%A7',
-  //   method: 'get',
-  //   // body: JSON.stringify({
-  //   //   "page_limit": 2
-  //   // }),
-  //   body: 'page_limit=1'
-  // }, (error, response, body) => {
-  //   console.log(body)
-  // })
-
-  axios({
-    url: 'https://movie.douban.com/subject/26914824/comments',
-    params: {
-      start: 0,
-      limit: 20,
-      sort: 'new_score',
-      status: 'P',
-      'percent_type': ''
-    }
-  }).then(response => {
-    console.log(response.data)
-  })
-
-
-
-}
-test()
+module.exports = comment;
