@@ -4,18 +4,24 @@
  * @description 异步请求
  */
 
-let request = require('request');
+let axios = require('axios');
 
-module.exports = config => {
+module.exports = params => {
 
-  let defaultConfig = {
-
+  let defaultParams = {
   }
 
+  Object.assign(defaultParams, params);
+
   return new Promise(resolve => {
-    request(config.url, (error, response, body) => {
-      config.callback && config.callback(body, resolve);
-    });
+
+    axios(defaultParams).then(response => {
+      params.callback && params.callback(response.data, resolve);
+    })
+
+    // request(config.url, (error, response, body) => {
+    //   config.callback && config.callback(body, resolve);
+    // });
   })
 }
 
