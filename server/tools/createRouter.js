@@ -11,8 +11,9 @@ let router = new koa2Router();
 
 const createRouter = async options => {
   return router.get(options.path, async ctx => {
-    console.log(urlParse(ctx.request.url))
-    ctx.body = await options.dataFun();
+    ctx.body = await options.dataFun({
+      params: urlParse(ctx.request.url)
+    });
   })
 }
 

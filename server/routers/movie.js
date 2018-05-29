@@ -7,20 +7,24 @@
 let createRouter = require('../tools/createRouter');
 
 let movieHome = require('../modules/movie/home');
+let movieDetail = require('../modules/movie/detail');
 
 const routerList = [
+  // 首页相关
   {
     path: '/movie/getHotShow',
     dataFun: movieHome.hotShow
   },
   {
     path: '/movie/getLatestHotMovie',
-    dataFun: movieHome.latestHotMovie
+    dataFun({ params }){
+      return movieHome.latestHotMovie(params);
+    }
   },
   {
     path: '/movie/getLatestHotTv',
-    dataFun(ctx){
-      return movieHome.latestHotTv();
+    dataFun({ params }){
+      return movieHome.latestHotTv(params);
     }
   },
   {
@@ -35,6 +39,13 @@ const routerList = [
     path: '/movie/getLoveFilmReview',
     dataFun: movieHome.loveFilmReview
   },
+  // 详情页相关
+  {
+    path: '/movie/getMovieDetail',
+    dataFun({ params }){
+      return movieDetail(params.id);
+    }
+  }
 ];
 
 module.exports = createRouter(routerList);

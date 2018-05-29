@@ -46,17 +46,17 @@ const hotShow = () => {
 }
 
 // 最近热门电影
-const latestHotMovie = () => {
+const latestHotMovie = ({ tag = '热门'}) => {
   return movieInTagList({
-    tag: '热门'
+    tag
   });
 }
 
 // 最近热门电视剧
-const latestHotTv = () => {
+const latestHotTv = ({ tag = '热门' }) => {
   return movieInTagList({
     type: 'tv',
-    tag: '热门'
+    tag
   });
 }
 
