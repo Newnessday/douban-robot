@@ -11,8 +11,6 @@ let router = new koa2Router();
 
 const createRouter = async options => {
   return router.get(options.path, async ctx => {
-    console.log(ctx)
-    // ctx.type = 'image/jpeg';
     ctx.body = await options.dataFun({
       params: urlParse(ctx.request.url)
     });

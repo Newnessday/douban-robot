@@ -24,11 +24,26 @@ module.exports = options => {
   return promise({
     url: `https://movie.douban.com/j/search_subjects?type=${defaultOptions.type}&tag=${encodeURIComponent(defaultOptions.tag)}&page_limit=50&page_start=0`,
     callback: (body, resolve) => {
-      console.log(body)
+
+      let data = [];
+
+      // 统一数据格式
+      body.subjects.map(item => {
+        data.push({
+          id: item.id,
+          image: item.cover,
+          name: item.title,
+          rating: {
+            type: '',
+            value: item.rate
+          }
+        });
+      });
+
       resolve(createResponse({
-        data: body.subjects,
+        data,
         msg: `豆瓣${defaultOptions.tag}${typeName[defaultOptions.type]}数据`
-      }))
+      }));
     }
   });
 }

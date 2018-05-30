@@ -10,6 +10,7 @@ let promise = require('../../tools/promise');
 let createResponse = require('../../tools/createResponse');
 let comment = require('./common/comment');
 let photos = require('./common/photos');
+let video = require('./common/video');
 
 // 影人信息
 const movieActors = async id => {
@@ -52,10 +53,12 @@ const movieDetail = id => {
   let actors;
   let commentList;
   let photosList;
+  let videoList;
 
   movieActors(id).then(data => actors = data);
   comment({ id }).then(data => commentList = data );
   photos({ id }).then(data => photosList = data);
+  video({ id }).then(data => videoList = data);
 
   return promise({
     url: `https://movie.douban.com/subject/${id}/`,
@@ -83,12 +86,13 @@ const movieDetail = id => {
         recommend,  //推荐
         commentList,  //影评列表
         photosList, //剧照
+        videoList,  //视频
       };
 
       resolve(createResponse({
         data,
         msg: `豆瓣电影【【${data.name}】】详情数据`,
-      }))
+      }));
     }
   })
 }
