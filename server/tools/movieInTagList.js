@@ -24,8 +24,9 @@ module.exports = options => {
   return promise({
     url: `https://movie.douban.com/j/search_subjects?type=${defaultOptions.type}&tag=${encodeURIComponent(defaultOptions.tag)}&page_limit=50&page_start=0`,
     callback: (body, resolve) => {
+      console.log(body)
       resolve(createResponse({
-        data: (JSON.parse(body)).subjects,
+        data: body.subjects,
         msg: `豆瓣${defaultOptions.tag}${typeName[defaultOptions.type]}数据`
       }))
     }

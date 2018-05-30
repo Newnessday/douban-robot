@@ -9,6 +9,7 @@ let cheerio = require('cheerio');
 let promise = require('../../tools/promise');
 let createResponse = require('../../tools/createResponse');
 let comment = require('./common/comment');
+let photos = require('./common/photos');
 
 // 影人信息
 const movieActors = async id => {
@@ -50,9 +51,11 @@ const movieDetail = id => {
 
   let actors;
   let commentList;
-  movieActors(id).then(data => actors = data);
+  let photosList;
 
+  movieActors(id).then(data => actors = data);
   comment({ id }).then(data => commentList = data );
+  photos({ id }).then(data => photosList = data);
 
   return promise({
     url: `https://movie.douban.com/subject/${id}/`,
@@ -79,6 +82,7 @@ const movieDetail = id => {
         actors, //演员
         recommend,  //推荐
         commentList,  //影评列表
+        photosList, //剧照
       };
 
       resolve(createResponse({
