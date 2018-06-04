@@ -81,7 +81,7 @@ const movieDetail = id => {
         year: $('.year').text(), //影片年份
         poster: $('.nbgnbg img').attr('src'), //影片海报
         info: $('#info').html(),  //影片信息
-        intro: $('.short span').text(), //剧情简介
+        intro: $('#link-report span').eq(0).text(), //剧情简介
         actors, //演员
         recommend,  //推荐
         commentList,  //影评列表
